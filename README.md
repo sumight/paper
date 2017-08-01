@@ -6,7 +6,7 @@ paper 是一个用来生成 Markdown 文档的前端库，无需 NodeJs 预编�
 
 paper 的使用非常简单，只需写一个 html 文件就可以搞定
 
-[样例目录](...)
+[样例目录](http://git.17usoft.com/bpFrontend/Paper/tree/master/demo)
 
 创建一个文件夹,包含如下文件
 
@@ -46,7 +46,7 @@ menu.json
 
 你将看到如下页面
 
-![Paper](...)
+![Paper](http://file.40017.cn/publicfront/imgs/TIM图片20170801091958.png)
 
 ## 使用 DEMO
 
@@ -56,7 +56,7 @@ menu.json
 
 使用 DEMO 语法呈现如下：
 
-![demo]()
+![demo](http://file.40017.cn/publicfront/imgs/demo.png)
 
 ### 指定 DEMO 的模板
 
