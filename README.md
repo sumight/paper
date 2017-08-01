@@ -139,4 +139,22 @@ Paper 的主文件是一个 html，我们使用 title 标签和 meta 标签进�
 </head>
 ``` 
 
-## Paper 服务
+## Paper Server
+
+Paper Server 提供了一个在线文档的服务，该服务会在你每次提交代码的时候，自动拉取项目的文档，并且发布，想要使用 Paper 你需要做如下事情
+
+1. 将项目权限设置为 internal
+
+如果您没有权限修改项目的权限，请联系上级
+
+2. 配置 webhooks
+
+将 webhooks 配置为 http://10.100.158.183:8111/webhooks
+
+[配置地址] http://git.17usoft.com/bpFrontend/[项目名]/settings/integrations
+
+配置完成之后，点击 test 测试是否成功
+
+3. 访问地址
+
+通过地址访问您的文档 http://10.100.158.183:8111/[项目名]/[paper的文档地址]
