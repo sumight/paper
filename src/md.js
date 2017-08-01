@@ -5,6 +5,7 @@ import get from 'lodash/get'
 import path from 'path'
 import Vue from 'vue/dist/vue.esm.js'
 import isArray from 'lodash/isArray'
+import defaultTo from 'lodash/defaultTo'
 window.path = path
 
 function getMeta(name, def){
@@ -20,7 +21,7 @@ function hasHost(url) {
 }
 function join(root, url) {
     if(hasHost(url)) return url;
-    return path.join(root, url);
+    return path.join(root, defaultTo(url, ''));
 }
 var plugin = {
     install: async function(Vue) {

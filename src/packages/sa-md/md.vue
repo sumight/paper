@@ -7,11 +7,14 @@
         <nav v-if="!isEmpty(menu)">
             <template v-for="item in menu">
                 <a :href="item.href" v-if="hasHost(item.href)" :key="item.title">{{item.title}}</a>
-                <router-link v-else :key="item.title" :to="item.href" :class="[isLinkActive(item.href)?'text-primary':'']">{{item.title}}</router-link>
-                <template v-if="item.children">
-                    <a href="javascript:;" sub-1 v-for="subitem in item.children" :key="subitem.title">
-                        {{subitem.title}}
-                    </a>
+                <router-link v-else :key="item.title" :to="item.href||''" :class="[isLinkActive(item.href)?'text-primary':'']">{{item.title}}</router-link>
+                <template v-if="item.children" >
+                    <template v-for="subitem in item.children">
+                        <a class="abc" :href="subitem.href||''" sub-1 :key="subitem.title" v-if="hasHost(subitem.href)">
+                            {{subitem.title}}
+                        </a> 
+                        <router-link v-else sub-1  :key="subitem.title" :to="subitem.href||''" :class="[isLinkActive(subitem.href)?'text-primary':'']">{{subitem.title}}</router-link>  
+                    </template>
                 </template>
             </template>
         </nav>
@@ -37,6 +40,7 @@ import example from '../sa-example/example.vue'
 import 'sailfish-core'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
+import defaultTo from 'lodash/defaultTo'
 import 'highlight.js/styles/github.css'
 marked.setOptions({
     highlight: function (code) {
@@ -71,7 +75,7 @@ function hasHost(url) {
 }
 function join(root, url) {
     if(hasHost(url)) return url;
-    return path.join(root, url);
+    return path.join(root, defaultTo(url, ''));
 }
 function extractJS(mdstr) {
     return get(/.?```js\n([^`]*)\n```.*/.exec(mdstr), '[1]', '')

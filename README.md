@@ -5,9 +5,9 @@ paper 是一个用来生成 Markdown 文档的前端库，无需 NodeJs 预编�
 ## 资源
 
 ```html
-<link rel="stylesheet" href="//file.40017.cn/publicfront/paper/v0-0-0/paper.css">
+<link rel="stylesheet" href="//file.40017.cn/publicfront/paper/v0-0-1/paper.css">
 
-<script type="text/javascript" src="//file.40017.cn/publicfront/paper/v0-0-0/paper.js"></script>
+<script type="text/javascript" src="//file.40017.cn/publicfront/paper/v0-0-1/paper.js"></script>
 ```
 
 ## 开始使用
@@ -32,10 +32,10 @@ doc.html
     <title>旗鱼核心样式</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="//file.40017.cn/publicfront/paper/v0-0-0/paper.css"> 
+    <link rel="stylesheet" href="//file.40017.cn/publicfront/paper/v0-0-1/paper.css"> 
 </head>
 <body>
-    <script src="//file.40017.cn/publicfront/paper/v0-0-0/paper.js"></script>
+    <script src="//file.40017.cn/publicfront/paper/v0-0-1/paper.js"></script>
 </body>
 </html>
 ```
