@@ -4,7 +4,7 @@
             <h1>{{title}}</h1>
         </header>
         
-        <nav>
+        <nav v-if="!isEmpty(menu)">
             <template v-for="item in menu">
                 <a :href="item.href" v-if="hasHost(item.href)" :key="item.title">{{item.title}}</a>
                 <router-link v-else :key="item.title" :to="item.href" :class="[isLinkActive(item.href)?'text-primary':'']">{{item.title}}</router-link>
@@ -36,7 +36,8 @@ import path from 'path'
 import example from '../sa-example/example.vue'
 import 'sailfish-core'
 import get from 'lodash/get'
-
+import isEmpty from 'lodash/isEmpty'
+import 'highlight.js/styles/github.css'
 marked.setOptions({
     highlight: function (code) {
         return hljs.highlightAuto(code).value.replace(/\=\&amp;gt;/g, '=>');
@@ -96,8 +97,7 @@ var MD = {
           
     },
     created() {
-        // alert(this.index);
-        if(this.$route.path === '/') this.$router.push(join(this.root, this.index));
+        if(this.$route.path === '/') this.load(join(this.root, this.index));
         else this.load(join(this.root, this.$route.path))
         this.$router.beforeEach((to, from, next)=>{
             this.load(join(this.root, to.path))
@@ -118,7 +118,8 @@ var MD = {
         isLinkActive(url) {
             return join(this.root, this.$route.path) === join(this.root, url);
         },
-        hasHost
+        hasHost,
+        isEmpty
     },
     components: {
         example

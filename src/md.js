@@ -4,6 +4,7 @@ import axios from 'axios'
 import get from 'lodash/get'
 import path from 'path'
 import Vue from 'vue/dist/vue.esm.js'
+import isArray from 'lodash/isArray'
 window.path = path
 
 function getMeta(name, def){
@@ -33,7 +34,13 @@ var plugin = {
         if(window.menu) MD.data.menu = window.menu;
         else {
             var menupath = getMeta('paper-menu', './menu.json');
-            MD.data.menu = (await axios.get(join(MD.data.root, menupath))).data    
+            try{
+                if(menupath) MD.data.menu = (await axios.get(join(MD.data.root, menupath))).data;
+                if(!isArray(MD.data.menu)) MD.data.menu = []; 
+            }catch(e){
+                 MD.data.menu = [];
+            }
+            
         }
         
         

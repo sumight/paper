@@ -1,6 +1,6 @@
 {
   "name": "paper",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "create markdown doc without nodejs",
   "author": "xiajiecheng <xiajiecheng@gmail.com>",
   "main": "src/main.js",
