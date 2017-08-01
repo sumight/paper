@@ -2,6 +2,14 @@
 
 paper 是一个用来生成 Markdown 文档的前端库，无需 NodeJs 预编译。
 
+## 资源
+
+```html
+<link rel="stylesheet" href="//file.40017.cn/publicfront/paper/v0-0-0/paper.css">
+
+<script type="text/javascript" src="//file.40017.cn/publicfront/paper/v0-0-0/paper.js"></script>
+```
+
 ## 开始使用
 
 paper 的使用非常简单，只需写一个 html 文件就可以搞定
@@ -24,10 +32,10 @@ doc.html
     <title>旗鱼核心样式</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="paper.css"> 
+    <link rel="stylesheet" href="//file.40017.cn/publicfront/paper/v0-0-0/paper.css"> 
 </head>
 <body>
-    <script src="paper.js"></script>
+    <script src="//file.40017.cn/publicfront/paper/v0-0-0/paper.js"></script>
 </body>
 </html>
 ```
