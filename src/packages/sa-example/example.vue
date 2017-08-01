@@ -1,18 +1,14 @@
 <template>
-    <div>
-        <h3>
-            普通下拉框
-            <span 
-                class="hover-primary pointer bold fr" 
-                style="font-size:.7em;"
-                @click="expanding=!expanding"
-            ><></span>
-        </h3>
+    <div class="relative">
+        <span 
+            class="hover-primary pointer bold absolute" 
+            style="font-size:.7em; right:5px; top: -25px;"
+            @click="expanding=!expanding"
+        ></></span>
         <panel-u border :style="expanding?{}:transparent">
             <header v-show="expanding">
                 DEMO
                 <button close @click="expanding=false"></button>
-                <!-- <button><i class="fa fa-pencil" @click="readonly?editable():readonlyit()"></i></button> -->
             </header>
             <iframe class="pct-100" ref="iframe" :style="{height: height+'px'}"></iframe>
             <div v-show="false" style="margin: -10px -15px;">

@@ -1,7 +1,7 @@
 {
   "name": "paper",
   "version": "0.0.1",
-  "description": "A Vue.js project",
+  "description": "create markdown doc without nodejs",
   "author": "xiajiecheng <xiajiecheng@gmail.com>",
   "main": "src/main.js",
   "scripts": {

@@ -6,8 +6,8 @@ import path from 'path'
 import Vue from 'vue/dist/vue.esm.js'
 window.path = path
 
-function getMeta(name){
-    return document.querySelector(`meta[name=${name}]`)
+function getMeta(name, def){
+    return get(document.querySelector(`meta[name=${name}]`), 'content', def);
 }
 function create(MD) {
     var md = (new Vue(MD)).$mount()
@@ -27,24 +27,28 @@ var plugin = {
         MD.router = new VueRouter({});
         Vue.use(VueRouter)
 
-        MD.data.root = get(getMeta('srcroot'), 'content', path.resolve(location.pathname, '..'));
+        MD.data.root = getMeta('paper-root', path.resolve(location.pathname, '..'));
         
         // 获取菜单配置
         if(window.menu) MD.data.menu = window.menu;
         else {
-            var menupath = get(getMeta('menupath'), 'content' ,'./menu.json');
+            var menupath = getMeta('paper-menu', './menu.json');
             MD.data.menu = (await axios.get(join(MD.data.root, menupath))).data    
         }
         
         
-        MD.data.index = get(getMeta('indexmd'), 'content', get(MD.data.menu, '[0].href', ''));
+        MD.data.index = getMeta('paper-index', get(MD.data.menu, '[0].href', ''));
+        // alert(MD.data.index)
         
         // 获取 DEMO 模板
-        var templateSrc = get(getMeta('demo-template'), 'content', '')
+        var templateSrc = getMeta('paper-demo-template', '')
         if(templateSrc) {
             MD.data.demoTemplate = (await axios.get(join(MD.data.root, templateSrc))).data;
         }
-        console.log(MD.data.demoTemplate);
+        
+        // 配置 Paper 标题
+        MD.data.title = get(document.querySelector('title'), 'innerText', MD.data.title);
+        
         var md = create(MD);
         window.md = md;
         

@@ -1,7 +1,7 @@
 <template>
     <container-u center fuse>
         <header>
-            <h1>旗鱼 UI</h1>
+            <h1>{{title}}</h1>
         </header>
         
         <nav>
@@ -82,6 +82,7 @@ var MD = {
     prefix: 'sa',
     name: 'md',
     data: {
+        title: 'Paper',
         html: '',
         menu: [],
         index: '',
@@ -95,11 +96,9 @@ var MD = {
           
     },
     created() {
-        // if(this.index) {
-        //     this.load(this.index).then(html=>this.html=html);    
-        // }
-        if(this.$route.path === '/') this.load(join(this.root, this.index));
-        this.load(join(this.root, this.$route.path))
+        // alert(this.index);
+        if(this.$route.path === '/') this.$router.push(join(this.root, this.index));
+        else this.load(join(this.root, this.$route.path))
         this.$router.beforeEach((to, from, next)=>{
             this.load(join(this.root, to.path))
             next();

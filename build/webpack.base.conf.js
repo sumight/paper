@@ -9,7 +9,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    'sailfish.vue.md': './src/md.js'
+    'paper': './src/md.js'
   },
   output: {
     path: config.build.assetsRoot,

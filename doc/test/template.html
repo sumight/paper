@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <title></title>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1">
-                    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
-                    <link rel="stylesheet" href="http://file.40017.cn/publicfront/sailfish/v1-0-7/sailfish.vue.css">
-                    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css">
-                    <script src="http://cdn.bootcss.com/babel-polyfill/6.22.0/polyfill.min.js" charset="utf-8"></script>
-                    <script src="http://cdn.bootcss.com/vue/2.4.2/vue.js" charset="utf-8"></script>
-                    <script src="https://unpkg.com/axios@0.16.1/dist/axios.js"></script>
-                    <script src="https://unpkg.com/jquery@3.2.1"></script>
-                    <script src="https://unpkg.com/ramda@0.23.0/dist/ramda.min.js"></script>
-                    <script src="https://unpkg.com/lodash@4.17.4"></script>
-                </head>
-                <body>
-                    ${html}
-                    <script src="http://file.40017.cn/publicfront/sailfish/v1-0-7/sailfish.vue.js"></script>
-                    <script>
-                    if(window.Vue) {
-                        Vue.config.warnHandler = (err, vm, info) => {
-                            Array.from(document.querySelectorAll('mask-u')).forEach(item=>item.remove());
-                            window.document.write('<mask-u dark class="text-danger">'+err+'</mask-u>');    
-                        }
-                    }
-                    window.addEventListener('error', event=>{
-                        window.document.write('<mask-u dark class="text-danger">'+event.message+'</mask-u>');
-                    })
-                    </script>
-                    ${js}
-                </body>
-            </html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://file.40017.cn/publicfront/sailfish/v1-0-7/sailfish.vue.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/github.min.css">
+    <script src="http://cdn.bootcss.com/babel-polyfill/6.22.0/polyfill.min.js" charset="utf-8"></script>
+    <script src="http://cdn.bootcss.com/vue/2.4.2/vue.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/axios@0.16.1/dist/axios.js"></script>
+    <script src="https://unpkg.com/jquery@3.2.1"></script>
+    <script src="https://unpkg.com/ramda@0.23.0/dist/ramda.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.17.4"></script>
+</head>
+<body>
+    ${html}
+    <script src="http://file.40017.cn/publicfront/sailfish/v1-0-7/sailfish.vue.js"></script>
+    <script>
+    if(window.Vue) {
+        Vue.config.warnHandler = (err, vm, info) => {
+            Array.from(document.querySelectorAll('mask-u')).forEach(item=>item.remove());
+            window.document.write('<mask-u dark class="text-danger">'+err+'</mask-u>');    
+        }
+    }
+    window.addEventListener('error', event=>{
+        window.document.write('<mask-u dark class="text-danger">'+event.message+'</mask-u>');
+    })
+    </script>
+    ${js}
+</body>
+</html>
