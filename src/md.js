@@ -4,9 +4,12 @@ import axios from 'axios'
 import get from 'lodash/get'
 import path from 'path'
 import Vue from 'vue/dist/vue.esm.js'
-window.path = path
-
-function getMeta(name, def){
+import isArray from 'lodash/isArray'
+import defaultTo from 'lodash/defaultTo'
+if(document.registerElement) {
+    ['side-menu','item-u'].forEach(item=>document.registerElement(item));
+}
+function getMeta(name, def){ 
     return get(document.querySelector(`meta[name=${name}]`), 'content', def);
 }
 function create(MD) {
@@ -19,7 +22,7 @@ function hasHost(url) {
 }
 function join(root, url) {
     if(hasHost(url)) return url;
-    return path.join(root, url);
+    return path.join(root, defaultTo(url, ''));
 }
 var plugin = {
     install: async function(Vue) {
@@ -33,7 +36,13 @@ var plugin = {
         if(window.menu) MD.data.menu = window.menu;
         else {
             var menupath = getMeta('paper-menu', './menu.json');
-            MD.data.menu = (await axios.get(join(MD.data.root, menupath))).data    
+            try{
+                if(menupath) MD.data.menu = (await axios.get(join(MD.data.root, menupath))).data;
+                if(!isArray(MD.data.menu)) MD.data.menu = []; 
+            }catch(e){
+                 MD.data.menu = [];
+            }
+            
         }
         
         

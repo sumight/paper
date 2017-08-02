@@ -1,23 +1,25 @@
 <template>
-    <container-u center fuse>
+    <container-u>
         <header>
             <h1>{{title}}</h1>
         </header>
         
-        <nav>
-            <template v-for="item in menu">
-                <a :href="item.href" v-if="hasHost(item.href)" :key="item.title">{{item.title}}</a>
-                <router-link v-else :key="item.title" :to="item.href" :class="[isLinkActive(item.href)?'text-primary':'']">{{item.title}}</router-link>
-                <template v-if="item.children">
-                    <a href="javascript:;" sub-1 v-for="subitem in item.children" :key="subitem.title">
-                        {{subitem.title}}
-                    </a>
-                </template>
-            </template>
+        <nav v-if="!isEmpty(menu)">
+            <sa-menu :data="menu"></sa-menu>  
         </nav>
         <main>
             <component :is="mddoc">
             </component>
+            <!-- <nav>
+                <a href="#">webpack</a>
+                <a href="#" sub-1="">boot</a>
+                <a href="#" sub-1="">code</a>
+                <a href="#" sub-1="">readme</a>
+                <a href="#">summer</a>
+                <a href="#" sub-1="">boot</a>
+                <a href="#" sub-1="">code</a>
+                <a href="#" sub-1="">readme</a>
+            </nav> -->
         </main>
     </container-u>
 </template>
@@ -36,7 +38,10 @@ import path from 'path'
 import example from '../sa-example/example.vue'
 import 'sailfish-core'
 import get from 'lodash/get'
-
+import isEmpty from 'lodash/isEmpty'
+import defaultTo from 'lodash/defaultTo'
+import saMenu from '../menu.vue'
+import 'highlight.js/styles/github.css'
 marked.setOptions({
     highlight: function (code) {
         return hljs.highlightAuto(code).value.replace(/\=\&amp;gt;/g, '=>');
@@ -70,7 +75,7 @@ function hasHost(url) {
 }
 function join(root, url) {
     if(hasHost(url)) return url;
-    return path.join(root, url);
+    return path.join(root, defaultTo(url, ''));
 }
 function extractJS(mdstr) {
     return get(/.?```js\n([^`]*)\n```.*/.exec(mdstr), '[1]', '')
@@ -96,10 +101,10 @@ var MD = {
           
     },
     created() {
-        // alert(this.index);
-        if(this.$route.path === '/') this.$router.push(join(this.root, this.index));
+        if(this.$route.path === '/') this.load(join(this.root, this.index));
         else this.load(join(this.root, this.$route.path))
         this.$router.beforeEach((to, from, next)=>{
+            // console.log()
             this.load(join(this.root, to.path))
             next();
         })
@@ -118,10 +123,11 @@ var MD = {
         isLinkActive(url) {
             return join(this.root, this.$route.path) === join(this.root, url);
         },
-        hasHost
+        hasHost,
+        isEmpty
     },
     components: {
-        example
+        example, saMenu
     }
 }
 export default MD;
@@ -141,5 +147,85 @@ export default MD;
             border-top: none;
             background: #f5f5f5;
         }
+    }
+    body{
+        section h1, section h2, section h3, section h4, section h5, section h6 {
+            margin: 1em 0 .75em 0;
+        }        
+    }
+    container-u > main > nav {
+        width: 220px;
+        position: fixed;
+        top: 80px;
+        right: 0;
+        > h1 {
+            color: inherit;
+        }
+        > a {
+            display: block;
+            color: #666;
+            padding: 8px 20px;
+            font-size: 14px;
+            &:not([href]), &[href="javascript:;"] {
+                color: white;
+            }
+            &:hover {
+                color: white;
+                text-decoration: none;
+            }
+        }
+        a[sub-1],a[sub-2],a[sub-3] {
+            position: relative;
+            &::before {
+                content: '';
+                height: 33px;
+                display: block;
+                position: absolute;
+                width:0;
+                left: 25px;
+                top: 0;
+                border-left: 1px dashed rgba(255, 255, 255, 0.25);
+            }
+        }
+        a[sub-1] {
+            padding-left: 20px+20px;
+        }
+        a[sub-2] {
+            padding-left: 20px+15px*2;
+        }
+        a[sub-3] {
+            padding-left: 20px+15px*3;
+        }
+        > a {
+            color: #666;
+            &:not([href]), &[href="javascript:;"] {
+                color: #666;
+                &:hover{
+                    color: #666;
+                }
+            }
+            &:hover {
+                color: #55a8fd;
+                text-decoration: none;
+            }
+        }
+        a[sub-1],a[sub-2],a[sub-3] {
+            &::before {
+                border-left: 1px dashed rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
+    side-menu item-u {
+        &, & > header {
+            background: white!important;
+        }
+    }
+    side-menu item-u[active] {
+        &, & > header {
+            color: #55a8fd!important;
+        }
+    }
+    container-u {
+        background: white;
     }
 </style>
