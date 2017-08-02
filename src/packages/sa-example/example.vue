@@ -33,9 +33,14 @@ import get from 'lodash/get'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/bespin.css'
-import codemirror from 'codemirror'
+
+var CodeMirror = require('codemirror') 
+import 'codemirror/mode/xml/xml'
+import 'codemirror/mode/css/css'
 import 'codemirror/mode/htmlmixed/htmlmixed'
 import 'codemirror/mode/javascript/javascript'
+
+import emmetCodeMirror from 'emmet-codemirror'
 import debounce from 'lodash/debounce'
 
 // 格式化 html 代码
@@ -66,13 +71,14 @@ Array.from(document.querySelectorAll('sa-example')).forEach(item=>{
 })
 
 function initEditor(el, mode) {
-    return codemirror.fromTextArea(el, {
+    return CodeMirror.fromTextArea(el, {
         lineNumbers: false,
         styleActiveLine: true,
         matchBrackets: true,
-        insertSoftTab: 2,
-        readOnly: true,
-        mode: mode==='html'?'htmlmixed':'javascript'
+        insertSoftTab: 4,
+        mode: mode==='html'?'text/html':'javascript',
+        lineNumbers : true,
+		profile: 'xhtml' /* define Emmet output profile */
     });
 }
 export default {
@@ -143,6 +149,7 @@ export default {
         },
         initEditor(){
             this.htmlEditor = initEditor(this.$refs.htmlEditor, 'html');
+            emmetCodeMirror(this.htmlEditor)
             this.jsEditor = initEditor(this.$refs.jsEditor, 'javascript');
             
             this.htmlEditor.on('change', debounce(event=>{
