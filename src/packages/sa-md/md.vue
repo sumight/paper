@@ -1,33 +1,32 @@
 <template>
-    <container-u>
-        <header>
-            <h1>{{title}}</h1>
-        </header>
-        
+    <container-u :collapsed="collapsed">
         <nav v-if="!isEmpty(menu)">
+            <header>
+                <h1>{{title}}</h1>
+            </header>
             <sa-menu :data="menu"></sa-menu>  
         </nav>
         <main>
-            <component :is="mddoc">
+            <header>
+                <a href="javascript:;" @click="collapsed=!collapsed">
+                    <i class="icono-hamburger"></i>
+                </a>
+            </header>
+            <component :is="mddoc" ref="mddoc">
             </component>
-            <!-- <nav>
-                <a href="#">webpack</a>
-                <a href="#" sub-1="">boot</a>
-                <a href="#" sub-1="">code</a>
-                <a href="#" sub-1="">readme</a>
-                <a href="#">summer</a>
-                <a href="#" sub-1="">boot</a>
-                <a href="#" sub-1="">code</a>
-                <a href="#" sub-1="">readme</a>
-            </nav> -->
+             <nav v-if="!isEmpty(submenu)">
+                <a v-if="item.level===2" v-for="item in submenu" :href="'#'+item.hash" :key="item.hash">{{item.name}}</a>
+                <a v-if="item.level===3" sub-1 v-for="item in submenu" :href="'#'+item.hash" :key="item.hash">{{item.name}}</a>
+            </nav>  
         </main>
     </container-u>
 </template>
 
 <script>
-// 菜单支持 hash 定位
+// 回到顶部
+// 配置二级菜单是否显示
+// 图片预览
 // 支持顶部菜单
-// 编辑器支持 emmet
 // --- 第二版 ---
 // 编辑器支持在新标签中打开
 // 编辑器支持代码收起，和横向打开
@@ -41,6 +40,7 @@ import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import defaultTo from 'lodash/defaultTo'
 import saMenu from '../menu.vue'
+import invoke from 'lodash/invoke'
 import 'highlight.js/styles/github.css'
 marked.setOptions({
     highlight: function (code) {
@@ -95,7 +95,9 @@ var MD = {
         mddoc: {
             template: '<h1>Empty</h1>'
         },
-        demoTemplate: '${html}\n${js}'
+        demoTemplate: '${html}\n${js}',
+        collapsed: false,
+        submenu: null
     },
     watch: {
           
@@ -118,10 +120,45 @@ var MD = {
                         example
                     }
                 }
+                this.$nextTick(()=>{
+                    this.addAnchor(this.$refs.mddoc.$el)
+                    this.triggerAnchor(this.$refs.mddoc.$el)
+                    setTimeout(()=> {
+                        this.submenu = this.genSubmenu(this.$refs.mddoc.$el)    
+                    });
+                })
             });
         },
         isLinkActive(url) {
             return join(this.root, this.$route.path) === join(this.root, url);
+        },
+        addAnchor(section) {
+            if(!section) return;
+            var headings = Array.from(section.querySelectorAll('h1, h2, h3'));
+            headings.forEach((heading)=>{
+                var headingText = heading.innerText;
+                var headingName = headingText.trim().replace(/ /g, '-');
+                heading.innerHTML = `${heading.innerHTML}<a href="#${this.$route.path}#${headingName}" id="${this.$route.path}#${headingName}">#</a>`;
+            })
+        },
+        genSubmenu(section) {
+            if(!section) return;
+            var headings = Array.from(section.querySelectorAll('h1, h2, h3'));
+            return headings.map((heading)=>{
+                var level = parseInt(heading.tagName.substr(1,1));
+                var headingText = heading.innerText.replace(/\#$/, '');
+                var headingName = headingText.trim().replace(/ /g, '-');
+                var hash = `${this.$route.path}#${headingName}`;
+                return {
+                    level: level,
+                    name: headingName,
+                    hash: hash
+                }
+            })
+        },
+        triggerAnchor(section) {
+            if(!section) return;
+            invoke(document.querySelector(`[href="${location.hash}"]`), 'click');
         },
         hasHost,
         isEmpty
@@ -153,10 +190,16 @@ export default MD;
             margin: 1em 0 .75em 0;
         }        
     }
+    container-u > main {
+        padding-right: 220px;
+    }
+    section > p > img {
+        width: 100%;
+    }
     container-u > main > nav {
         width: 220px;
         position: fixed;
-        top: 80px;
+        top: 15px;
         right: 0;
         > h1 {
             color: inherit;
@@ -227,5 +270,28 @@ export default MD;
     }
     container-u {
         background: white;
+    }
+    container-u > nav {
+        overflow: hidden!important;
+        background: white!important;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        > header {
+            color: #333;
+            border-bottom: 1px solid #dcdcdc;
+        }
+    }
+    container-u[collapsed] > nav {
+        width: 0;
+    }
+    container-u[collapsed] > main {
+        margin-left: 0;
+    }
+    h1>a:first-child, h2>a:first-child, h3>a:first-child, h4>a:first-child, h5>a:first-child, h6>a:first-child {
+        font-size: .9em;
+        left: -1.2em;
+        padding-right: 5px;
+        position: static;
+        opacity: 0;
+        margin-left: 5px;
     }
 </style>

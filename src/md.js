@@ -6,6 +6,7 @@ import path from 'path'
 import Vue from 'vue/dist/vue.esm.js'
 import isArray from 'lodash/isArray'
 import defaultTo from 'lodash/defaultTo'
+import "icono";
 if(document.registerElement) {
     ['side-menu','item-u'].forEach(item=>document.registerElement(item));
 }

@@ -1,6 +1,6 @@
 {
   "name": "paper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "create markdown doc without nodejs",
   "author": "xiajiecheng <xiajiecheng@gmail.com>",
   "main": "src/main.js",
@@ -15,6 +15,7 @@
     "codemirror": "^5.28.0",
     "emmet-codemirror": "^1.2.5",
     "highlight.js": "^9.12.0",
+    "icono": "^1.3.1",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "sailfish": "file:///Users/mac/tc/sailfish",
