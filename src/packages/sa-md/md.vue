@@ -1,5 +1,5 @@
 <template>
-    <container-u :collapsed="collapsed">
+     <container-u :collapsed="collapsed">
         <nav v-if="!isEmpty(menu)">
             <header>
                 <h1>{{title}}</h1>
@@ -19,17 +19,10 @@
                 <a v-if="item.level===3" sub-1 v-for="item in submenu" :href="'#'+item.hash" :key="item.hash">{{item.name}}</a>
             </nav>  
         </main>
-    </container-u>
+    </container-u> 
 </template>
 
 <script>
-// 回到顶部
-// 配置二级菜单是否显示
-// 图片预览
-// 支持顶部菜单
-// --- 第二版 ---
-// 编辑器支持在新标签中打开
-// 编辑器支持代码收起，和横向打开
 import axios from 'axios'
 import marked from './marked.js'
 import hljs from 'highlight.js'
