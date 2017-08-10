@@ -1,7 +1,7 @@
 [{
     "title": "foo",
-    "href": "/foo.md"
+    "file": "foo.md"
 },{
     "title": "bar",
-    "href": "/bar.md"
+    "file": "bar.md"
 }]
