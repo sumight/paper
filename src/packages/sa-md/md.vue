@@ -163,6 +163,7 @@ var MD = {
 export default MD;
 </script>
 <style lang="less">
+body {
     .hover-primary:hover {
         color: #55a8fd;
     }
@@ -287,4 +288,6 @@ export default MD;
         opacity: 0;
         margin-left: 5px;
     }
+}
+    
 </style>
